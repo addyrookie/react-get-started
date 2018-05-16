@@ -1,4 +1,6 @@
+//webpack.config.js
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
 	entry: path.resolve(__dirname, "app", "app.js"),
@@ -7,7 +9,8 @@ module.exports = {
 		filename: "bundle.js"
 	},
 	devServer: {
-		contentBase: "./dist"
+		contentBase: "./dist",
+		hot: true
 	},
 	module: {
 		rules: [
@@ -15,7 +18,12 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				loader: "babel-loader",
 				exclude: /node_modules/
+			},
+			{
+				test: /\.css$/,
+				loader: "style-loader!css-loader"
 			}
 		]
-	}
+	},
+	plugins: [new webpack.HotModuleReplacementPlugin()]
 };
